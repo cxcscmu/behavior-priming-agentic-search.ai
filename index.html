@@ -328,11 +328,11 @@
         </div>
     </header>
 
-    <div class="container">
+        <div class="container">
         <div class="section">
             <h2>Abstract</h2>
             <p class="abstract">
-                Agentic search leverages large language models (LLMs) to solve complex user information needs by executing a multi-step process of planning, searching, and synthesizing information to provide answers. This paradigm introduces unique challenges for LLMs' agentic reasoning capabilities when interacting with retrieval systems and the broader web. In this paper, we propose an <strong>LLM-based pipeline to study effective reasoning behavior patterns in agentic search</strong> by comparing and analyzing successful and unsuccessful trajectories. Using this pipeline, we identify <strong>four beneficial reasoning behaviors</strong>: <span class="highlight">Information Verification</span>, <span class="highlight">Authority Evaluation</span>, <span class="highlight">Adaptive Search</span>, and <span class="highlight">Error Recovery</span>. Based on these findings, we propose a technique called <strong>Behavior Priming</strong> to train agentic search models. It synthesizes trajectories that exhibit these four behaviors and integrates them into the agentic search model through supervised fine-tuning (SFT), followed by standard reinforcement learning (RL). Experiments on Qwen3-1.7B and Llama3.2-3B-Instruct across three web benchmarks and seven multi-hop QA benchmarks demonstrate that behavior priming yields significant performance gains compared to training models with RL directly and outperforms other SFT-then-RL baselines.
+                Agentic search leverages large language models (LLMs) to interpret complex user information needs and execute a multi-step process of planning queries, executing searches, and adapting its strategy based on retrieved documents. This introduces unique challenges for LLMs' reasoning and agentic capabilities in interacting with retrieval systems and the broader web. In this paper, we design a reasoning-driven <strong>LLM-based pipeline to study effective behaviors in agentic search</strong>. Using this pipeline, we analyze successful agentic search trajectories and extract four beneficial reasoning behaviors: <span class="highlight">Information Verification</span>, <span class="highlight">Authority Evaluation</span>, <span class="highlight">Adaptive Search</span>, and <span class="highlight">Error Recovery</span>. We then propose a new <strong>behavior priming technique</strong> to train more effective agentic search models. It synthesizes agentic search trajectories with target behaviors and integrates them into the agentic search model through supervised finetuning (SFT), followed by standard reinforcement learning (RL). Experiments on Qwen3-1.7B and Llama3.2-3B-Instruct across three web benchmarks and seven multi-hop QA benchmarks demonstrate that behavior priming 1) yields significant performance gains compared to training with direct RL, and 2) outperforms other SFT-then-RL baselines, such as those SFT on randomly selected trajectories or on trajectories with merely correct outcomes. We also demonstrate that the reasoning behaviors, rather than the correctness of the final answer, is the critical factor for achieving strong performance in RL: SFT on trajectories with reasoning behaviors but incorrect answers leads to comparable performance with SFT on those with reasoning behaviors and correct answers. Our analysis further reveals that the introduced reasoning behaviors endow models with more effective exploration (higher pass@k and entropy) and test-time scaling (longer trajectories) capabilities, providing a strong foundation for RL.
             </p>
         </div>
 
@@ -345,7 +345,7 @@
                     <div class="behavior-example">
                         <strong>Example:</strong>
                         "My task is clear: verify if the quoted text exactly matches Greetham's article. Accuracy is paramount; I'll use 'uncoupled', 'authors', 'mis-transmission', and 'veil' to zero in on the relevant section."
-                    </div>
+                </div>
                 </div>
                 <div class="behavior-card">
                     <h4>Authority Evaluation</h4>
@@ -353,7 +353,7 @@
                     <div class="behavior-example">
                         <strong>Example:</strong>
                         "I'm aiming for the USGS's own reports or databases, like the 'Nonindigenous Aquatic Species' page, to get the most reliable data."
-                    </div>
+                </div>
                 </div>
                 <div class="behavior-card">
                     <h4>Adaptive Search</h4>
@@ -361,7 +361,7 @@
                     <div class="behavior-example">
                         <strong>Example:</strong>
                         "The search engine may not have indexed the quote perfectly, or the user's quote may differ slightly. I'll refine my strategy."
-                    </div>
+        </div>
                 </div>
                 <div class="behavior-card">
                     <h4>Error Recovery</h4>
@@ -372,19 +372,18 @@
                     </div>
                 </div>
             </div>
-        </div>
-
+                </div>
+                
         <div class="section">
             <h2>Key Contributions</h2>
             <div class="key-findings">
                 <ul>
                     <li><strong>Automated Behavior Discovery:</strong> We design an LLM-based pipeline that automatically identifies beneficial reasoning behaviors by comparing successful and unsuccessful agentic search trajectories.</li>
                     <li><strong>Behavior Priming Method:</strong> We propose a post-training technique that systematically instills identified behaviors through supervised fine-tuning (SFT) followed by reinforcement learning (RL).</li>
-                    <li><strong>Surprising Finding:</strong> <em>Reasoning behaviors matter more than answer correctness</em> — SFT on trajectories with desired behaviors but incorrect answers achieves comparable performance to SFT on correct-answer trajectories after RL.</li>
-                    <li><strong>Mechanistic Insights:</strong> Behavior priming enhances exploration capabilities (higher pass@k and entropy) and test-time scaling, establishing a robust foundation for effective RL training.</li>
-                </ul>
-            </div>
-        </div>
+                    <li><strong>Experimental Evidence:</strong> We empirically demonstrate that Behavior Priming significantly unlocks a model's potential in RL, enabling higher final performance by establishing a robust foundation for exploration and test-time scaling capabilities.</li>
+                        </ul>
+                    </div>
+                </div>
 
         <div class="section">
             <h2>Main Results</h2>
@@ -634,8 +633,8 @@
                 <li>Behavior-primed models achieve <strong>over 37% higher</strong> overall performance compared to direct RL baselines on web benchmarks (22.3 vs. 13.9 for Qwen3-1.7B; 19.9 vs. 14.5 for Llama3.2-3B-Instruct)</li>
                 <li>Behavior Priming consistently outperforms both random trajectory selection and correctness-focused baselines across all benchmarks</li>
                 <li>The method demonstrates strong generalization across both web agent tasks and multi-hop QA benchmarks</li>
-            </ul>
-        </div>
+                    </ul>
+                </div>
 
         <div class="section">
             <h2>Method Overview</h2>
@@ -665,7 +664,7 @@
 }
             </div>
         </div>
-    </div>
+            </div>
 
     <footer>
         <p>&copy; 2025 Carnegie Mellon University | Language Technologies Institute</p>
