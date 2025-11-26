@@ -287,7 +287,7 @@
             h1 {
                 font-size: 1.8rem;
             }
-            
+
             .subtitle {
                 font-size: 1rem;
             }
@@ -315,14 +315,12 @@
     <header>
         <div class="container">
             <h1>Beneficial Reasoning Behaviors in Agentic Search and Effective Post-Training to Obtain Them</h1>
-            <p class="subtitle">Identifying and Instilling Critical Reasoning Behaviors for Search Agents</p>
             <p class="authors">
                 <strong>Jiahe Jin</strong>, <strong>Abhijay Paladugu</strong>, <strong>Chenyan Xiong</strong>
             </p>
             <p class="affiliation">Language Technologies Institute, Carnegie Mellon University</p>
             <div class="header-links">
                 <a href="https://arxiv.org/abs/2510.06534" class="btn" target="_blank">Paper (arXiv)</a>
-                <a href="https://arxiv.org/pdf/2510.06534v2" class="btn" target="_blank">PDF</a>
                 <a href="https://github.com/cxcscmu/Behavior-Priming-for-Agentic-Search" class="btn btn-secondary" target="_blank">Code</a>
             </div>
         </div>
@@ -332,7 +330,7 @@
         <div class="section">
             <h2>Abstract</h2>
             <p class="abstract">
-                Agentic search leverages large language models (LLMs) to interpret complex user information needs and execute a multi-step process of planning queries, executing searches, and adapting its strategy based on retrieved documents. This introduces unique challenges for LLMs' reasoning and agentic capabilities in interacting with retrieval systems and the broader web. In this paper, we design a reasoning-driven <strong>LLM-based pipeline to study effective behaviors in agentic search</strong>. Using this pipeline, we analyze successful agentic search trajectories and extract four beneficial reasoning behaviors: <span class="highlight">Information Verification</span>, <span class="highlight">Authority Evaluation</span>, <span class="highlight">Adaptive Search</span>, and <span class="highlight">Error Recovery</span>. We then propose a new <strong>behavior priming technique</strong> to train more effective agentic search models. It synthesizes agentic search trajectories with target behaviors and integrates them into the agentic search model through supervised finetuning (SFT), followed by standard reinforcement learning (RL). Experiments on Qwen3-1.7B and Llama3.2-3B-Instruct across three web benchmarks and seven multi-hop QA benchmarks demonstrate that behavior priming 1) yields significant performance gains compared to training with direct RL, and 2) outperforms other SFT-then-RL baselines, such as those SFT on randomly selected trajectories or on trajectories with merely correct outcomes. We also demonstrate that the reasoning behaviors, rather than the correctness of the final answer, is the critical factor for achieving strong performance in RL: SFT on trajectories with reasoning behaviors but incorrect answers leads to comparable performance with SFT on those with reasoning behaviors and correct answers. Our analysis further reveals that the introduced reasoning behaviors endow models with more effective exploration (higher pass@k and entropy) and test-time scaling (longer trajectories) capabilities, providing a strong foundation for RL.
+                Agentic search leverages LLMs to solve complex user information needs by executing a multi-step process of planning, searching, and synthesizing information to provide answers. This paradigm introduces unique challenges for LLMs' agentic reasoning capabilities when interacting with search systems. In this paper, we design a reasoning-driven <strong>LLM-based pipeline to study effective behaviors in agentic search</strong>. Using this pipeline, we analyze successful agentic search trajectories and extract four beneficial reasoning behaviors: <span class="highlight">Information Verification</span>, <span class="highlight">Authority Evaluation</span>, <span class="highlight">Adaptive Search</span>, and <span class="highlight">Error Recovery</span>. We then propose a new <strong>behavior priming technique</strong> to train more effective agentic search models. It synthesizes agentic search trajectories with target behaviors and integrates them into the agentic search model through supervised finetuning (SFT), followed by standard reinforcement learning (RL). Experiments on Qwen3-1.7B and Llama3.2-3B-Instruct across three web benchmarks and seven multi-hop QA benchmarks demonstrate that behavior priming <strong>1) yields significant performance gains compared to training with direct RL</strong>, and <strong>2) outperforms other SFT-then-RL baselines</strong>, such as those SFT on randomly selected trajectories or on trajectories with merely correct outcomes. We also demonstrate that the reasoning behaviors, rather than the correctness of the final answer, is the critical factor for achieving strong performance in RL: SFT on trajectories with reasoning behaviors but incorrect answers leads to comparable performance with SFT on those with reasoning behaviors and correct answers. Our analysis further reveals that the introduced reasoning behaviors endow models with more effective exploration (higher pass@k and entropy) and test-time scaling (longer trajectories) capabilities, providing a strong foundation for RL.
             </p>
         </div>
 
@@ -373,8 +371,8 @@
                 </div>
             </div>
                 </div>
-                
-        <div class="section">
+
+        <!-- <div class="section">
             <h2>Key Contributions</h2>
             <div class="key-findings">
                 <ul>
@@ -383,13 +381,45 @@
                     <li><strong>Experimental Evidence:</strong> We empirically demonstrate that Behavior Priming significantly unlocks a model's potential in RL, enabling higher final performance by establishing a robust foundation for exploration and test-time scaling capabilities.</li>
                         </ul>
                     </div>
-                </div>
+                </div> -->
+
+        <div class="section">
+            <h2>Method Overview</h2>
+
+            <h3>Behavior Identification</h3>
+            <div class="method-steps">
+                <ol>
+                    <li><strong>Trajectory Generation:</strong> Generate diverse agentic search trajectories with diffrent LLMs, and construct successful vs. failed trajectories pairs from different LLMs on same tasks.</li>
+                    <li><strong>Trajectory Analysis:</strong> Use LLM-based pipeline to analyze the successful vs. failed trajectories pairs → extract beneficial behaviors from analysis → merger and consolidate common behavior patterns.</li>
+                </ol>
+            </div>
+
+            <h3>Behavior Priming</h3>
+            <div class="method-steps">
+                <ol>
+                    <li><strong>Trajectory Corpora Generation:</strong> Generate large agentic search trajectories corpora using a powerful model (Gemini-2.5-Flash).</li>
+                    <li><strong>Behavior Analysis:</strong> Use an LLM-based pipeline to analyze the presence of beneficial behaviors in each trajectory.</li>
+                    <li><strong>SFT with Behavior Priming:</strong> Fine-tune models on trajectories exhibiting the four identified behaviors.</li>
+                    <li><strong>RL Training:</strong> Apply standard reinforcement learning (GRPO) to train behavior-primed models.</li>
+                </ol>
+            </div>
+        </div>
 
         <div class="section">
             <h2>Main Results</h2>
-            
-            <h3>Table 1: Performance on Web Agent Benchmarks</h3>
-            <p>Comparison of Behavior Priming with baseline approaches before and after RL training. <em>*We identified evaluation hacking in this model. Details are provided in the paper's Appendix.</em></p>
+
+            <h3>Baseline Approaches</h3>
+            <div class="key-findings">
+                <ul>
+                    <li><strong> Direct RL (No SFT):</strong> Train the model with direct RL without any SFT.</li>
+                    <li><strong> SFT (Random) + RL:</strong> Train the model with SFT on randomly selected trajectories and then with RL.</li>
+                    <li><strong> SFT (Correct) + RL:</strong> Train the model with SFT on trajectories with correct answers and then with RL.</li>
+                </ul>
+                <p><em>*We select all trajectories from the same trajectory corpora generated by Gemini-2.5-Flash.</em></p>
+            </div>
+
+            <h3>Performance on Web Agent Benchmarks</h3>
+            <p>Results on three web agent benchmarks (after RL training): <em>*We identified evaluation hacking in this model. Details are provided in the paper's Appendix.</em></p>
             
             <div class="results-table">
                 <table>
@@ -411,55 +441,6 @@
                     </thead>
                     <tbody>
                         <tr class="section-separator">
-                            <td colspan="9">Before RL (After SFT)</td>
-                        </tr>
-                        <tr>
-                            <td>Base Model (No SFT)</td>
-                            <td>Qwen3-1.7B</td>
-                            <td>7.7</td>
-                            <td>1.9</td>
-                            <td>0.0</td>
-                            <td>3.9</td>
-                            <td>15.3</td>
-                            <td>4.0</td>
-                            <td style="background: #f5f7fa;">7.7</td>
-                        </tr>
-                        <tr>
-                            <td>SFT (Random)</td>
-                            <td>Qwen3-1.7B</td>
-                            <td>12.8</td>
-                            <td>7.7</td>
-                            <td>0.0</td>
-                            <td>8.7</td>
-                            <td>23.5</td>
-                            <td>5.4</td>
-                            <td style="background: #f5f7fa;">12.5</td>
-                        </tr>
-                        <tr>
-                            <td>SFT (Correct)</td>
-                            <td>Qwen3-1.7B</td>
-                            <td>10.3</td>
-                            <td>9.6</td>
-                            <td>0.0</td>
-                            <td>8.7</td>
-                            <td>24.3</td>
-                            <td>4.8</td>
-                            <td style="background: #f5f7fa;">12.6</td>
-                        </tr>
-                        <tr>
-                            <td>Behavior Prime</td>
-                            <td>Qwen3-1.7B</td>
-                            <td>12.8</td>
-                            <td>7.7</td>
-                            <td>0.0</td>
-                            <td>8.7</td>
-                            <td>22.0</td>
-                            <td>4.6</td>
-                            <td style="background: #f5f7fa;">11.8</td>
-                        </tr>
-                        <tr class="section-separator">
-                            <td colspan="9">After RL</td>
-                        </tr>
                         <tr>
                             <td>Direct RL (No SFT)</td>
                             <td>Qwen3-1.7B</td>
@@ -555,7 +536,7 @@
                 </table>
             </div>
         
-            <h3>Table 2: Performance on Multi-hop QA Benchmarks</h3>
+            <h3>Performance on Multi-hop QA Benchmarks</h3>
             <p>Results on seven multi-hop question answering benchmarks (after RL training):</p>
             
             <div class="results-table">
@@ -576,7 +557,7 @@
                     </thead>
                     <tbody>
                         <tr class="section-separator">
-                            <td colspan="10">Other Work Baselines</td>
+                            <td colspan="10"><em>Other Work Baselines</em></td>
                         </tr>
                         <tr>
                             <td>Search-R1-base</td>
@@ -627,7 +608,7 @@
                             <td style="background: #f5f7fa;">61.8</td>
                         </tr>
                         <tr class="section-separator">
-                            <td colspan="10">Our Methods</td>
+                            <td colspan="10"><em>Our Methods</em></td>
                         </tr>
                         <tr>
                             <td>Direct RL (No SFT)</td>
@@ -732,26 +713,6 @@
                 </table>
             </div>
         
-            <p style="margin-top: 25px;"><strong>Key Findings:</strong></p>
-            <ul style="margin-left: 30px; line-height: 1.8;">
-                <li>Behavior-primed models achieve <strong>over 60% higher</strong> overall performance compared to direct RL baselines on web benchmarks (22.3 vs. 13.9 for Qwen3-1.7B; 19.9 vs. 14.5 for Llama3.2-3B-Instruct)</li>
-                <li>Behavior Priming consistently outperforms both random trajectory selection and correctness-focused baselines across all benchmarks</li>
-                <li>The method demonstrates strong generalization across both web agent tasks and multi-hop QA benchmarks</li>
-            </ul>
-        </div>
-
-        <div class="section">
-            <h2>Method Overview</h2>
-            <h3>Behavior Priming Pipeline</h3>
-            <div class="method-steps">
-                <ol>
-                    <li><strong>Trajectory Generation:</strong> Generate diverse agentic search trajectories using a powerful model (Gemini-2.5-Flash).</li>
-                    <li><strong>Behavior Identification:</strong> Use LLM-based analysis to compare successful vs. failed trajectories and extract beneficial behaviors.</li>
-                    <li><strong>Behavior Mining:</strong> Run a reasoner → extractor → merger pipeline to consolidate and quantify behavior patterns.</li>
-                    <li><strong>SFT with Behavior Priming:</strong> Fine-tune models on trajectories exhibiting the four identified behaviors.</li>
-                    <li><strong>RL Training:</strong> Apply standard reinforcement learning (GRPO) to further improve performance.</li>
-                </ol>
-            </div>
         </div>
 
         <div class="section">
@@ -770,12 +731,5 @@
         </div>
             </div>
 
-    <footer>
-        <p>&copy; 2025 Carnegie Mellon University | Language Technologies Institute</p>
-        <p style="margin-top: 10px;">
-            <a href="https://github.com/cxcscmu/Behavior-Priming-for-Agentic-Search">GitHub</a> • 
-            <a href="https://arxiv.org/abs/2510.06534">arXiv</a>
-        </p>
-    </footer>
 </body>
 </html>
